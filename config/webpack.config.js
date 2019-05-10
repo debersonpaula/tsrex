@@ -55,7 +55,7 @@ module.exports = function (
         ? 'static/js/[name].[contenthash:8].js'
         : isEnvDevelopment && 'static/js/bundle.js',
       // TODO: remove this when upgrading to webpack 5
-      futureEmitAssets: true,
+      // futureEmitAssets: true,
       // There are also additional JS chunk files if you use code splitting.
       chunkFilename: isEnvProduction
         ? 'static/js/[name].[contenthash:8].chunk.js'
@@ -78,7 +78,6 @@ module.exports = function (
         // TS
         {
           test: /\.(ts|tsx)?$/,
-          include: sourcePath,
           loader: require.resolve('babel-loader'),
           options: {
             babelrc: false,
@@ -86,14 +85,14 @@ module.exports = function (
             presets: [
               '@babel/react',
               '@babel/typescript',
-              ['@babel/env', { modules: false }],
+              ['@babel/env', { modules: false }]
             ],
             plugins: [
               ['@babel/plugin-proposal-decorators', { legacy: true }],
               ['@babel/plugin-proposal-class-properties', { loose: true }],
-              '@babel/plugin-proposal-object-rest-spread',
-            ],
-          },
+              '@babel/plugin-proposal-object-rest-spread'
+            ]
+          }
         },
         {
           enforce: 'pre',
