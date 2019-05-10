@@ -10,7 +10,15 @@ export class App extends React.Component {
       <div>
         <h2>React App</h2>
         <p>Testing TSREx</p>
-        <p>Value from NodeEnv = {process.env.comments}</p>
+        <p>Values from NodeEnv
+          comments = {process.env.comments}<br/>
+          booleanValue = {process.env.booleanValue.toString()}<br/>
+          numericValue = {process.env.numericValue}<br/>
+        </p>
+
+
+        <p>isEnvDevelopment = {process.env.isEnvDevelopment}</p>
+        <p>isEnvProduction = {process.env.isEnvProduction}</p>
 
         <hr />
         <p>ExRedux Counter</p>

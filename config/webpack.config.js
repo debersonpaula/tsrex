@@ -24,6 +24,11 @@ module.exports = function (
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const sourcePath = path.resolve(basePath, configReactData.source);
+  const nodeEnv = {
+    isEnvDevelopment: isEnvDevelopment.toString(),
+    isEnvProduction: isEnvProduction.toString(),
+    ...configReactData.nodeEnv,
+  };
 
   const config = {
     // ==== MODE =============================================================================
@@ -148,18 +153,12 @@ module.exports = function (
         }),
       }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
-      new webpack.EnvironmentPlugin({
-        ...configReactData.nodeEnv
-      }),
+      new webpack.EnvironmentPlugin(nodeEnv),
       isEnvProduction && new CleanWebpackPlugin({
         dry: false,
         verbose: true,
         cleanOnceBeforeBuildPatterns: [path.join(basePath, configReactData.outputPath, '/**/*')],
       }),
-      // isEnvProduction && new CleanWebpackPlugin([configReactData.outputPath], {
-      //   root: basePath,
-      //   verbose: true
-      // }),
       isEnvProduction && new BundleAnalyzerPlugin({
         analyzerMode: "static",
         openAnalyzer: false

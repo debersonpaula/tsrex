@@ -10,7 +10,9 @@ module.exports = {
   host: 'localhost',
   // all enviroments to be set in process.env
   nodeEnv: {
-    comments: 'Comment from Node Enviroments'
+    comments: 'Comment from Node Enviroments',
+    booleanValue: true,
+    numericValue: 37
   },
   // all enviroments to be set in HTMLWebpackPlugin
   // available in HTML thru <%= htmlWebpackPlugin.options.propertyName %>
