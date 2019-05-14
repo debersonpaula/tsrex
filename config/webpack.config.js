@@ -19,10 +19,12 @@ module.exports = function (
     outputPath: '',
     nodeEnv: {},
     htmlEnv: {},
+    library: false
   }
 ) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
+  const isEnvLibrary = configReactData.library;
   const sourcePath = path.resolve(basePath, configReactData.source);
   const nodeEnv = {
     isEnvDevelopment: isEnvDevelopment.toString(),
@@ -31,10 +33,9 @@ module.exports = function (
   };
 
   const config = {
-    // ==== MODE =============================================================================
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    // ==== DEVTOOL ==========================================================================
     devtool: isEnvDevelopment && 'source-map',
+    context: isEnvLibrary ? basePath : undefined,
     // ==== ENTRY ============================================================================
     entry: [
       isEnvDevelopment && `webpack-dev-server/client?http://${configReactData.host}:${
@@ -44,31 +45,7 @@ module.exports = function (
       path.join(sourcePath, 'index.tsx'),
     ].filter(Boolean),
     // ==== OUTPUT ===========================================================================
-    output: {
-      // The build folder.
-      path: isEnvProduction ? path.join(basePath, configReactData.outputPath) : undefined,
-      // Add /* filename */ comments to generated require()s in the output.
-      pathinfo: isEnvDevelopment,
-      // There will be one main bundle, and one file per asynchronous chunk.
-      // In development, it does not produce real files.
-      filename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].js'
-        : isEnvDevelopment && 'static/js/bundle.js',
-      // TODO: remove this when upgrading to webpack 5
-      // futureEmitAssets: true,
-      // There are also additional JS chunk files if you use code splitting.
-      chunkFilename: isEnvProduction
-        ? 'static/js/[name].[contenthash:8].chunk.js'
-        : isEnvDevelopment && 'static/js/[name].chunk.js',
-      // Point sourcemap entries to original disk location (format as URL on Windows)
-      devtoolModuleFilenameTemplate: isEnvProduction
-        ? info =>
-          path
-            .relative(configReactData, info.absoluteResourcePath)
-            .replace(/\\/g, '/')
-        : isEnvDevelopment &&
-        (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
-    },
+    output: require('./helpers/output.config')(isEnvDevelopment, isEnvProduction, isEnvLibrary, basePath, configReactData.outputPath),
     // ==== MODULE ===========================================================================
     module: {
       // makes missing exports an error instead of warning
@@ -133,7 +110,7 @@ module.exports = function (
     },
     // ==== PLUGINS ===========================================================================
     plugins: [
-      new HTMLWebpackPlugin({
+      !isEnvLibrary && new HTMLWebpackPlugin({
         template: path.join(sourcePath, 'index.html'),
         inject: true,
         ...configReactData.htmlEnv,
@@ -158,14 +135,14 @@ module.exports = function (
         verbose: true,
         cleanOnceBeforeBuildPatterns: [path.join(basePath, configReactData.outputPath, '/**/*')],
       }),
-      isEnvProduction && new BundleAnalyzerPlugin({
+      isEnvProduction && !isEnvLibrary && new BundleAnalyzerPlugin({
         analyzerMode: "static",
         openAnalyzer: false
       })
     ].filter(Boolean),
     // ==== OPTIMIZE ==========================================================================
     optimization: {
-      splitChunks: {
+      splitChunks: isEnvLibrary ? undefined : {
         cacheGroups: {
           commons: {
             test: /[\\/]node_modules[\\/]/,
@@ -191,6 +168,41 @@ module.exports = function (
       sideEffects: isEnvProduction
     }
   };
+  // ==== LIBRARY ==========================================================================
+  if (isEnvLibrary) {
+    config.externals = {
+      redux: {
+        commonjs: "redux",
+        commonjs2: "redux",
+        amd: "redux",
+        root: "redux"
+      },
+      "react-redux": {
+        commonjs: "react-redux",
+        commonjs2: "react-redux",
+        amd: "react-redux",
+        root: "react-redux"
+      },
+      rxjs: {
+        commonjs: "rxjs",
+        commonjs2: "rxjs",
+        amd: "rxjs",
+        root: "rxjs"
+      },
+      react: {
+        commonjs: "react",
+        commonjs2: "react",
+        amd: "React",
+        root: "React"
+      },
+      "react-dom": {
+        commonjs: "react-dom",
+        commonjs2: "react-dom",
+        amd: "ReactDOM",
+        root: "ReactDOM"
+      }
+    }
+  }
 
   return config;
 };

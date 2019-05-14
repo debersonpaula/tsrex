@@ -14,6 +14,7 @@ const nodeArgs = args.slice(1);
 switch (script) {
   case 'build':
   case 'start':
+  case 'library':
   case 'test': {
     const scriptHandler = require('../scripts/' + script);
 

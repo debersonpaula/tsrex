@@ -17,7 +17,8 @@ module.exports = function loadConfigFile(filename) {
       host: configObject.host || '0.0.0.0',
       nodeEnv: configObject.nodeEnv,
       htmlEnv: configObject.htmlEnv,
-      outputPath: configObject.outputPath
+      outputPath: configObject.outputPath,
+      library: configObject.library,
     };
   } else {
     throw new Error(`Configuration file "${configFileName}" does not exists.`);
