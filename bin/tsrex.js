@@ -22,11 +22,15 @@ switch (script) {
       const result = scriptHandler(nodeArgs, process.cwd());
 
       result
-        .then(() => {
+        .then((response) => {
           console.log('Finished script execution.');
+          if (!response.results.success) {
+            process.exit(1);  
+          }
         })
-        .catch(() => {
+        .catch((err) => {
           console.log('Script "' + script + '" executed with error.');
+          console.log(err);
           process.exit(1);
         });
     } else {

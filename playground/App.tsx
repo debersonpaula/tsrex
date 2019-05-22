@@ -12,7 +12,6 @@ export class App extends React.Component {
         <p>Testing TSREx</p>
         <p>Values from NodeEnv
           comments = {process.env.comments}<br/>
-          booleanValue = {process.env.booleanValue.toString()}<br/>
           numericValue = {process.env.numericValue}<br/>
         </p>
 
