@@ -15,6 +15,11 @@ module.exports = (args, basePath) => {
     configReactData.source
   );
 
+  if (configReactData.jest) {
+    Object.assign(jestOptions, configReactData.jest);
+  }
+
+
   // run tests
   return jest.runCLI(jestOptions, [basePath]);
 };
