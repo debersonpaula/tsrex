@@ -24,7 +24,7 @@ switch (script) {
       result
         .then((response) => {
           console.log('Finished script execution.');
-          if (!response.results.success) {
+          if (script === 'test' && !response.results.success) {
             process.exit(1);  
           }
         })
