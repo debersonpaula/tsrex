@@ -4,17 +4,11 @@ module.exports = (source) => ({
     '^.+\\.(ts|tsx)$': require.resolve('./babelTransform'),
     '^.+\\.(js|jsx)$': require.resolve('./babelTransformES6'),
   }),
-  transformIgnorePatterns: [
-    // '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-    // '^.+\\.module\\.(css|sass|scss)$',
-    // '<rootDir>/node_modules/',
-    // `<rootDir>/${source}/index.tsx`
-  ],
-
+  
   clearMocks: true,
   collectCoverage: true,
   coverageReporters: ['json', 'html', 'lcovonly'],
-  collectCoverageFrom: [`${source}/**/*.{ts,tsx}`, `!${source}/**/*.d.ts`, `!${source}/index.tsx`],
+  collectCoverageFrom: [`${source}/**/*.{ts,tsx}`, `!${source}/**/*.d.ts`],
   coverageThreshold: JSON.stringify({
     global: {
       branches: 80,
