@@ -2,12 +2,13 @@ module.exports = (source) => ({
   testMatch: [`<rootDir>/${source}/**/*.test.{js,jsx,ts,tsx}`],
   transform: JSON.stringify({
     '^.+\\.(ts|tsx)$': require.resolve('./babelTransform'),
+    '^.+\\.(js|jsx)$': require.resolve('./babelTransformES6'),
   }),
   transformIgnorePatterns: [
-    '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
-    '^.+\\.module\\.(css|sass|scss)$',
-    '<rootDir>/node_modules/',
-    `<rootDir>/${source}/index.tsx`
+    // '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$',
+    // '^.+\\.module\\.(css|sass|scss)$',
+    // '<rootDir>/node_modules/',
+    // `<rootDir>/${source}/index.tsx`
   ],
 
   clearMocks: true,

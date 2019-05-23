@@ -2,6 +2,7 @@
 
 const loadConfigFile = require('./utils/loadConfigFile');
 const jest = require('jest');
+const merge = require('deepmerge');
 
 module.exports = (args, basePath) => {
   // get config filename
@@ -11,12 +12,14 @@ module.exports = (args, basePath) => {
   const configReactData = loadConfigFile(configFile);
 
   // load jest config
-  const jestOptions = require('../config/testUtils/jest.base')(
+  const jestBaseOptions = require('../config/testUtils/jest.base')(
     configReactData.source
   );
 
+  let jestOptions = jestBaseOptions;
+
   if (configReactData.jest) {
-    Object.assign(jestOptions, configReactData.jest);
+    jestOptions = merge(jestBaseOptions, configReactData.jest);
   }
 
 

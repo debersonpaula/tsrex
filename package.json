@@ -1,7 +1,7 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "0.0.0-beta.10",
+  "version": "0.0.0-beta.11",
   "main": "./bin/tsrex.js",
   "scripts": {
     "pg:start": "node bin/tsrex start ./playground/react.config.js",
@@ -44,6 +44,7 @@
     "chalk": "^2.4.2",
     "clean-webpack-plugin": "^2.0.2",
     "css-loader": "^2.1.1",
+    "deepmerge": "^3.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.1",
     "enzyme-to-json": "^3.3.5",
