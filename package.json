@@ -1,13 +1,15 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "0.0.0-beta.12",
+  "version": "0.0.0-beta.13",
   "main": "./bin/tsrex.js",
   "scripts": {
     "pg:start": "node bin/tsrex start ./playground/react.config.js",
     "pg:build": "node bin/tsrex build ./playground/react.config.js",
     "pg:lib": "node bin/tsrex library ./playground/react.config.lib.js",
-    "pg:test": "node bin/tsrex test ./playground/react.config.js"
+    "pg:test": "node bin/tsrex test ./playground/react.config.js",
+    "pg:static": "node bin/tsrex build ./static-test/react.config.static.js",
+    "pg:player": "node bin/tsrex start ./static-test/react.config.player.js"
   },
   "bin": {
     "tsrex": "./bin/tsrex.js"

@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function(host, https) {
+module.exports = function(host, https, override) {
   return {
     // Enable gzip compression of generated files.
     compress: true,
@@ -17,5 +15,6 @@ module.exports = function(host, https) {
     https: https === 'https',
     host,
     overlay: false,
+    ...override
   };
 };

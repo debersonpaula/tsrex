@@ -19,12 +19,15 @@ module.exports = function (
     outputPath: '',
     nodeEnv: {},
     htmlEnv: {},
-    library: false
+    library: false,
+    outputStatic: null
   }
 ) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const isEnvLibrary = configReactData.library;
+  const isEnvStatic = configReactData.outputStatic != null;
+
   const sourcePath = path.resolve(basePath, configReactData.source);
   const nodeEnv = {
     isEnvDevelopment: isEnvDevelopment.toString(),
@@ -45,7 +48,7 @@ module.exports = function (
       path.join(sourcePath, 'index.tsx'),
     ].filter(Boolean),
     // ==== OUTPUT ===========================================================================
-    output: require('./helpers/output.config')(isEnvDevelopment, isEnvProduction, isEnvLibrary, basePath, configReactData.outputPath),
+    output: require('./helpers/output.config')(webpackEnv, basePath, configReactData),
     // ==== MODULE ===========================================================================
     module: {
       // makes missing exports an error instead of warning
@@ -53,7 +56,7 @@ module.exports = function (
 
       rules: [
         {
-          test: /\.(ts|tsx)?$/,
+          test: /\.(ts|tsx|js|jsx)?$/,
           loader: require.resolve('babel-loader'),
           options: {
             babelrc: false,
@@ -70,11 +73,11 @@ module.exports = function (
             ]
           }
         },
-        {
-          enforce: 'pre',
-          test: /\.(js|jsx)$/,
-          loader: 'source-map-loader',
-        },
+        // {
+        //   enforce: 'pre',
+        //   test: /\.(js|jsx)$/,
+        //   loader: 'source-map-loader',
+        // },
         {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
@@ -84,7 +87,7 @@ module.exports = function (
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
+            name: 'assets/media/[name].[hash:8].[ext]',
           },
         }
       ],
@@ -96,7 +99,7 @@ module.exports = function (
     },
     // ==== PLUGINS ===========================================================================
     plugins: [
-      !isEnvLibrary && new HTMLWebpackPlugin({
+      !isEnvLibrary && !isEnvStatic && new HTMLWebpackPlugin({
         template: path.join(sourcePath, 'index.html'),
         inject: true,
         ...configReactData.htmlEnv,
@@ -121,14 +124,14 @@ module.exports = function (
         verbose: true,
         cleanOnceBeforeBuildPatterns: [path.join(basePath, configReactData.outputPath, '/**/*')],
       }),
-      isEnvProduction && !isEnvLibrary && new BundleAnalyzerPlugin({
+      isEnvProduction && !isEnvLibrary && !isEnvStatic && new BundleAnalyzerPlugin({
         analyzerMode: "static",
         openAnalyzer: false
       })
     ].filter(Boolean),
     // ==== OPTIMIZE ==========================================================================
     optimization: {
-      splitChunks: isEnvLibrary ? undefined : {
+      splitChunks: isEnvLibrary || isEnvStatic ? undefined : {
         cacheGroups: {
           commons: {
             test: /[\\/]node_modules[\\/]/,

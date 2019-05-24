@@ -32,7 +32,8 @@ module.exports = (args, basePath) => new Promise((resolve, reject) => {
   }
 
   // create web dev server
-  const devServer = new WebpackDevServer(compiler, configDevServer(configReactData.host, false));
+  const cfgdev = configDevServer(configReactData.host, false, configReactData.devServer);
+  const devServer = new WebpackDevServer(compiler, cfgdev);
   const port = configReactData.port;
   const hostname = configReactData.host;
 
