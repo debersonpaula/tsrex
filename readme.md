@@ -30,7 +30,7 @@ Extend base tsconfig.json from TSREX folder:
 {
   "extends": "./node_modules/tsrex/tsconfig.json",
   "compilerOptions": {
-    ...
+
   }
 }
 ```
@@ -40,7 +40,7 @@ Same for tslint.json:
 ```json
 {
   "extends": "./node_modules/tsrex/tslint.json",
-  ...
+
 }
 ```
 
@@ -139,4 +139,32 @@ module.exports = {
   },
   ...
 };
+```
+
+## Enable React Hot Loader
+
+This utility, enables the plugin __react-hot-loader__, that increments your application without losing the current state.
+
+To use this utility, just enable it in your _react.config.test.js_:
+```js
+module.exports = {
+  reactHotLoader: true,
+  ...
+};
+```
+
+And wrap the main app with the _reactHot_ function:
+```tsx
+import * as React from 'react';
+import { reactHot } from 'tsrex/utils';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>Component Hot Reload Test</div>
+    );
+  }
+}
+
+export default reactHot(App);
 ```
