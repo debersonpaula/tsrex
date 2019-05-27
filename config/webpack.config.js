@@ -20,7 +20,8 @@ module.exports = function (
     nodeEnv: {},
     htmlEnv: {},
     library: false,
-    outputStatic: null
+    outputStatic: null,
+    reactHotLoader: false
   }
 ) {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -32,6 +33,7 @@ module.exports = function (
   const nodeEnv = {
     isEnvDevelopment: isEnvDevelopment.toString(),
     isEnvProduction: isEnvProduction.toString(),
+    NODE_ENV: webpackEnv,
     ...configReactData.nodeEnv,
   };
 
@@ -57,7 +59,7 @@ module.exports = function (
       rules: [
         {
           test: /\.(ts|tsx|js|jsx)?$/,
-          loader: require.resolve('babel-loader'),
+          loader: 'babel-loader',
           options: {
             babelrc: false,
             configFile: false,
@@ -69,22 +71,18 @@ module.exports = function (
             plugins: [
               ['@babel/plugin-proposal-decorators', { legacy: true }],
               ['@babel/plugin-proposal-class-properties', { loose: true }],
-              '@babel/plugin-proposal-object-rest-spread'
-            ]
+              '@babel/plugin-proposal-object-rest-spread',
+              configReactData.reactHotLoader && 'react-hot-loader/babel'
+            ].filter(Boolean)
           }
         },
-        // {
-        //   enforce: 'pre',
-        //   test: /\.(js|jsx)$/,
-        //   loader: 'source-map-loader',
-        // },
         {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
         },
         {
           exclude: [/\.html$/, /\.jsx?$/, /\.js?$/, /\.tsx?$/, /\.ts?$/, /\.css$/],
-          loader: require.resolve('url-loader'),
+          loader: 'url-loader',
           options: {
             limit: 10000,
             name: 'assets/media/[name].[hash:8].[ext]',
@@ -96,6 +94,9 @@ module.exports = function (
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
       plugins: [new TsConfigPathsPlugin()],
+      alias: configReactData.reactHotLoader ? {
+        'react-dom': '@hot-loader/react-dom'
+      } : {}
     },
     // ==== PLUGINS ===========================================================================
     plugins: [

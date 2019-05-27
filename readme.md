@@ -30,7 +30,7 @@ Extend base tsconfig.json from TSREX folder:
 {
   "extends": "./node_modules/tsrex/tsconfig.json",
   "compilerOptions": {
-    ...
+
   }
 }
 ```
@@ -40,7 +40,7 @@ Same for tslint.json:
 ```json
 {
   "extends": "./node_modules/tsrex/tslint.json",
-  ...
+
 }
 ```
 
@@ -112,16 +112,59 @@ module.exports = {
       global: {
         branches: 50,
         functions: 50,
-        lines: 50
-      }
+        lines: 50,
+      },
     },
     moduleNameMapper: {
-      "@components/(.*)": "<rootDir>/src/components/$1",
-      "@containers/(.*)": "<rootDir>/src/containers/$1",
-      "@interfaces/(.*)": "<rootDir>/src/interfaces/$1",
-      "@services/(.*)": "<rootDir>/src/services/$1",
+      '@components/(.*)': '<rootDir>/src/components/$1',
+      '@containers/(.*)': '<rootDir>/src/containers/$1',
+      '@interfaces/(.*)': '<rootDir>/src/interfaces/$1',
+      '@services/(.*)': '<rootDir>/src/services/$1',
     },
-    updateSnapshot: true
-  }
+    updateSnapshot: true,
+  },
 };
+```
+
+## DevServer customization
+
+In case if is necessary to customize webpack-dev-server options, just include "__devServer__" in your _react.config.test.js_:
+
+```js
+module.exports = {
+  devServer: {
+    hot: true,
+    publicPath: '/',
+    contentBase: path.join(__dirname, 'dist'),
+  },
+  ...
+};
+```
+
+## Enable React Hot Loader
+
+This utility, enables the plugin __react-hot-loader__, that increments your application without losing the current state.
+
+To use this utility, just enable it in your _react.config.test.js_:
+```js
+module.exports = {
+  reactHotLoader: true,
+  ...
+};
+```
+
+And wrap the main app with the _reactHot_ function:
+```tsx
+import * as React from 'react';
+import { reactHot } from 'tsrex/utils';
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>Component Hot Reload Test</div>
+    );
+  }
+}
+
+export default reactHot(App);
 ```
