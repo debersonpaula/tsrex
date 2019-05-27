@@ -3,8 +3,8 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  target: 'node', // in order to ignore built-in modules like path, fs, etc. 
-  externals: [nodeExternals()], // in order to ignore all modules in node_modules folder 
+  target: 'node',
+  externals: [nodeExternals()],
   mode: 'production',
   // ==== ENTRY ============================================================================
   entry: [
@@ -34,7 +34,7 @@ module.exports = {
   // ==== PLUGINS ===========================================================================
   plugins: [
     new CleanWebpackPlugin({
-      dry: true,
+      dry: false,
       verbose: true,
       cleanOnceBeforeBuildPatterns: [path.join(__dirname, '../dist-bin', '/**/*')],
     }),

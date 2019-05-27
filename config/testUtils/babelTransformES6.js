@@ -1,11 +1,5 @@
-'use strict';
-
-const babelJest = require('babel-jest');
-
-const babelConfig = babelJest.createTransformer({
+module.exports = require('babel-jest').createTransformer({
   babelrc: false,
   configFile: false,
   presets: ['@babel/preset-env'],
 });
-
-module.exports = babelConfig;

@@ -1,8 +1,4 @@
-'use strict';
-
-const babelJest = require('babel-jest');
-
-const babelConfig = babelJest.createTransformer({
+module.exports = require('babel-jest').createTransformer({
   babelrc: false,
   configFile: false,
   presets: [
@@ -17,5 +13,3 @@ const babelConfig = babelJest.createTransformer({
     'transform-es2015-modules-commonjs'
   ]
 });
-
-module.exports = babelConfig;
