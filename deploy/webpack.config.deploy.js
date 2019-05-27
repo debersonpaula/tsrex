@@ -38,7 +38,6 @@ module.exports = {
       verbose: true,
       cleanOnceBeforeBuildPatterns: [path.join(__dirname, '../dist-bin', '/**/*')],
     }),
-
   ],
   // ==== OPTIMIZE ==========================================================================
   optimization: {

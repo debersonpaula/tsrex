@@ -11,6 +11,7 @@ copyMocks('styleMock');
 copyRoot('tsconfig.json');
 copyRoot('tslint.json');
 copyRoot('readme.md');
+copyRoot('package.json');
 
 fs.copyFileSync(path.join(__dirname, '../bin/index.js'), path.join(__dirname, '../dist-bin/index.js'));
 

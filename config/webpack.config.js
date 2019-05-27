@@ -94,9 +94,9 @@ module.exports = function (
     resolve: {
       extensions: ['.ts', '.tsx', '.js'],
       plugins: [new TsConfigPathsPlugin()],
-      alias: configReactData.reactHotLoader ? {} : {
+      alias: configReactData.reactHotLoader ? {
         'react-dom': '@hot-loader/react-dom'
-      }
+      } : {}
     },
     // ==== PLUGINS ===========================================================================
     plugins: [

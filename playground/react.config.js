@@ -19,4 +19,6 @@ module.exports = {
   htmlEnv: {
     htmlComments: 'Comment from HTML Enviroment'
   },
+  // enable React Hol Loader
+  reactHotLoader: true
 };
