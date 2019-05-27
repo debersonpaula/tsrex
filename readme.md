@@ -166,5 +166,5 @@ class App extends React.Component {
   }
 }
 
-export default reactHot(App);
+export default reactHot(module, App);
 ```

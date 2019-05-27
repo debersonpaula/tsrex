@@ -22,7 +22,7 @@ class App extends React.Component {
           <p>isEnvProduction = {process.env.isEnvProduction}</p>
 
           <hr />
-          <p>ExRedux Counter</p>
+          <p>ExRedux Counter: </p>
           <Counter />
         </div>
       </Provider>
@@ -30,4 +30,4 @@ class App extends React.Component {
   }
 }
 
-export default reactHot(App);
+export default reactHot(module, App);

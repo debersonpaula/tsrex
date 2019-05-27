@@ -60,6 +60,7 @@ module.exports = function (
         {
           test: /\.(ts|tsx|js|jsx)?$/,
           loader: 'babel-loader',
+          exclude: /node_modules/,
           options: {
             babelrc: false,
             configFile: false,
