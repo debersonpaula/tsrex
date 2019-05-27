@@ -5,12 +5,12 @@
   "main": "./bin/index.js",
   "scripts": {
     "pg:start": "node dist-bin/tsrex start ./playground/react.config.js",
-    "pg:build": "node bin/tsrex build ./playground/react.config.js",
-    "pg:lib": "node bin/tsrex library ./playground/react.config.lib.js",
-    "pg:test": "node bin/tsrex test ./playground/react.config.js",
-    "pg:static": "node bin/tsrex build ./static-test/react.config.static.js",
-    "pg:player": "node bin/tsrex start ./static-test/react.config.player.js",
-    "build:binary-": "webpack -p --colors --progress --config ./deploy/webpack.config.deploy.js"
+    "pg:build": "node dist-bin/tsrex build ./playground/react.config.js",
+    "pg:lib": "node dist-bin/tsrex library ./playground/react.config.lib.js",
+    "pg:test": "node dist-bin/tsrex test ./playground/react.config.js",
+    "pg:static": "node dist-bin/tsrex build ./static-test/react.config.static.js",
+    "pg:player": "node dist-bin/tsrex start ./static-test/react.config.player.js",
+    "build:binary": "webpack -p --colors --progress --config ./deploy/webpack.config.deploy.js"
   },
   "bin": {
     "tsrex": "./bin/tsrex.js"

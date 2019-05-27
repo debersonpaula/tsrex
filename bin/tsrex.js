@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-'use strict';
-
 // Makes the script crash on unhandled rejections
 process.on('unhandledRejection', err => {
   throw err;

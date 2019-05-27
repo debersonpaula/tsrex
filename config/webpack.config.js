@@ -59,7 +59,7 @@ module.exports = function (
       rules: [
         {
           test: /\.(ts|tsx|js|jsx)?$/,
-          loader: require.resolve('babel-loader'),
+          loader: 'babel-loader',
           options: {
             babelrc: false,
             configFile: false,
@@ -76,18 +76,13 @@ module.exports = function (
             ].filter(Boolean)
           }
         },
-        // {
-        //   enforce: 'pre',
-        //   test: /\.(js|jsx)$/,
-        //   loader: 'source-map-loader',
-        // },
         {
           test: /\.css$/,
           loader: 'style-loader!css-loader',
         },
         {
           exclude: [/\.html$/, /\.jsx?$/, /\.js?$/, /\.tsx?$/, /\.ts?$/, /\.css$/],
-          loader: require.resolve('url-loader'),
+          loader: 'url-loader',
           options: {
             limit: 10000,
             name: 'assets/media/[name].[hash:8].[ext]',

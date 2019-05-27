@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const path = require("path");
 
@@ -10,7 +8,9 @@ const path = require("path");
 module.exports = function loadConfigFile(filename) {
   const configFileName = path.resolve(process.cwd(), filename);
   if (fs.existsSync(configFileName)) {
-    const configObject = require(configFileName);
+    const configObjectRaw = fs.readFileSync(configFileName);
+    const configObject = eval(configObjectRaw.toString());
+
     return {
       source: configObject.source,
       port: configObject.port || 8080,
@@ -22,6 +22,7 @@ module.exports = function loadConfigFile(filename) {
       jest: configObject.jest,
       outputStatic: configObject.outputStatic,
       devServer: configObject.devServer,
+      reactHotLoader: configObject.reactHotLoader,
     };
   } else {
     throw new Error(`Configuration file "${configFileName}" does not exists.`);
