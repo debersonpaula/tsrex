@@ -1,15 +1,16 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "0.0.0-beta.13",
-  "main": "./bin/tsrex.js",
+  "version": "0.0.0-beta.14",
+  "main": "./bin/index.js",
   "scripts": {
-    "pg:start": "node bin/tsrex start ./playground/react.config.js",
+    "pg:start": "node dist-bin/tsrex start ./playground/react.config.js",
     "pg:build": "node bin/tsrex build ./playground/react.config.js",
     "pg:lib": "node bin/tsrex library ./playground/react.config.lib.js",
     "pg:test": "node bin/tsrex test ./playground/react.config.js",
     "pg:static": "node bin/tsrex build ./static-test/react.config.static.js",
-    "pg:player": "node bin/tsrex start ./static-test/react.config.player.js"
+    "pg:player": "node bin/tsrex start ./static-test/react.config.player.js",
+    "build:binary-": "webpack -p --colors --progress --config ./deploy/webpack.config.deploy.js"
   },
   "bin": {
     "tsrex": "./bin/tsrex.js"
@@ -33,6 +34,7 @@
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
+    "@hot-loader/react-dom": "^16.8.6",
     "@types/enzyme": "^3.9.2",
     "@types/jest": "^24.0.13",
     "@types/react": "^16.8.17",
@@ -56,6 +58,7 @@
     "jest": "^24.8.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.8",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "redux": "^4.0.1",
@@ -72,5 +75,10 @@
     "webpack": "4.31.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-server": "3.3.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "webpack-cli": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }
