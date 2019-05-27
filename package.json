@@ -4,7 +4,8 @@
   "version": "0.0.0-beta.14",
   "main": "index.js",
   "scripts": {
-    "build": "npm run build:binary && npm run build:copy",
+    "build": "npm run build:binary && npm run build:copy && npm run build:utils",
+    "deploy": "npm run build && cd dist-bin && npm publish",
     "pg:start": "node dist-bin/tsrex start ./playground/react.config.js",
     "pg:build": "node dist-bin/tsrex build ./playground/react.config.js",
     "pg:lib": "node dist-bin/tsrex library ./playground/react.config.lib.js",
@@ -12,7 +13,8 @@
     "pg:static": "node dist-bin/tsrex build ./static-test/react.config.static.js",
     "pg:player": "node dist-bin/tsrex start ./static-test/react.config.player.js",
     "build:binary": "webpack -p --colors --progress --config ./deploy/webpack.config.deploy.js",
-    "build:copy": "node ./deploy/copy.js"
+    "build:copy": "node ./deploy/copy.js",
+    "build:utils": "tsc -d -p deploy/tsconfig.utils.json"
   },
   "bin": {
     "tsrex": "./index.js"
