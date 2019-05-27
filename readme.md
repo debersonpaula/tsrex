@@ -112,16 +112,31 @@ module.exports = {
       global: {
         branches: 50,
         functions: 50,
-        lines: 50
-      }
+        lines: 50,
+      },
     },
     moduleNameMapper: {
-      "@components/(.*)": "<rootDir>/src/components/$1",
-      "@containers/(.*)": "<rootDir>/src/containers/$1",
-      "@interfaces/(.*)": "<rootDir>/src/interfaces/$1",
-      "@services/(.*)": "<rootDir>/src/services/$1",
+      '@components/(.*)': '<rootDir>/src/components/$1',
+      '@containers/(.*)': '<rootDir>/src/containers/$1',
+      '@interfaces/(.*)': '<rootDir>/src/interfaces/$1',
+      '@services/(.*)': '<rootDir>/src/services/$1',
     },
-    updateSnapshot: true
-  }
+    updateSnapshot: true,
+  },
+};
+```
+
+## DevServer customization
+
+In case if is necessary to customize webpack-dev-server options, just include "__devServer__" in your _react.config.test.js_:
+
+```js
+module.exports = {
+  devServer: {
+    hot: true,
+    publicPath: '/',
+    contentBase: path.join(__dirname, 'dist'),
+  },
+  ...
 };
 ```
