@@ -7,6 +7,7 @@ module.exports = require('babel-jest').createTransformer({
     ['@babel/env', { modules: false }]
   ],
   plugins: [
+    "babel-plugin-transform-typescript-metadata",
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-object-rest-spread',

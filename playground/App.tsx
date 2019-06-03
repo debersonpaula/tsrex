@@ -2,9 +2,8 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Counter } from './counter/Counter';
 import { appModels } from './AppModels';
-import { reactHot } from '../utils';
 
-class App extends React.Component {
+export class App extends React.Component {
   render() {
     return (
       <Provider store={appModels.createStore()}>
@@ -29,5 +28,3 @@ class App extends React.Component {
     );
   }
 }
-
-export default reactHot(module, App);
