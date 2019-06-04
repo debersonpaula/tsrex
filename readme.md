@@ -168,3 +168,7 @@ class App extends React.Component {
 
 export default reactHot(module, App);
 ```
+
+## Sample Project
+
+[tsrex-sample](https://github.com/debersonpaula/tsrex-sample)

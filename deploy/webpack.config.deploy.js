@@ -1,5 +1,5 @@
 const path = require('path');
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -7,9 +7,7 @@ module.exports = {
   externals: [nodeExternals()],
   mode: 'production',
   // ==== ENTRY ============================================================================
-  entry: [
-    path.join(__dirname, '../bin/tsrex.js'),
-  ],
+  entry: [path.join(__dirname, '../bin/tsrex.js')],
   // ==== OUTPUT ===========================================================================
   output: {
     path: path.join(__dirname, '../dist-bin'),
@@ -21,27 +19,21 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: [
-          /[\\/]node_modules[\\/]/
-        ]
-      }
+      },
     ],
   },
   // ==== RESOLVE ===========================================================================
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js'],
   },
   // ==== PLUGINS ===========================================================================
   plugins: [
     new CleanWebpackPlugin({
       dry: false,
       verbose: true,
-      cleanOnceBeforeBuildPatterns: [path.join(__dirname, '../dist-bin', '/**/*')],
+      cleanOnceBeforeBuildPatterns: [
+        path.join(__dirname, '../dist-bin', '/**/*'),
+      ],
     }),
   ],
-  // ==== OPTIMIZE ==========================================================================
-  optimization: {
-    minimize: true,
-    usedExports: true,
-  }
-}
+};
