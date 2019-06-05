@@ -20,5 +20,16 @@ module.exports = {
     htmlComments: 'Comment from HTML Enviroment'
   },
   // enable React Hot Loader
-  reactHotLoader: true
+  reactHotLoader: true,
+
+  jest: {
+    coverageThreshold: {
+      global: {
+        branches: 50,
+        functions: 50,
+        lines: 50,
+      },
+    },
+    updateSnapshot: true,
+  },
 };

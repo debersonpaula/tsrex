@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Provider } from 'exredux';
 import { Counter } from './counter/Counter';
-import { appModels } from './AppModels';
+import { modelStore } from './modelStore';
 
 export class App extends React.Component {
   render() {
     return (
-      <Provider modelStore={appModels}>
+      <Provider modelStore={modelStore}>
         <div>
           <h2>React App</h2>
           <p>Testing TSREx</p>

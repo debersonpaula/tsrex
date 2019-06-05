@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Counter } from '../counter/Counter';
 import { Provider } from 'exredux';
-import { appModels } from '../AppModels';
+import { modelStore } from '../modelStore';
 
 describe('Counter', () => {
   let rendered: ReactWrapper;
@@ -13,7 +13,7 @@ describe('Counter', () => {
   // -------------------------------------------------------
   it('should match snapshot', () => {
     rendered = mount(
-      <Provider modelStore={appModels}>
+      <Provider modelStore={modelStore}>
         <Counter />
       </Provider>
     );
