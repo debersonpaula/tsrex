@@ -1,5 +1,8 @@
 # TSREX
 
+[![Version](https://img.shields.io/npm/v/tsrex.svg)](https://npmjs.org/package/tsrex)
+[![Downloads/week](https://img.shields.io/npm/dw/tsrex.svg)](https://npmjs.org/package/tsrex)
+
 ### <b>T</b>ype<b>S</b>cript <b>R</b>eact <b>EX</b>Redux
 
 This package contains the following modules:

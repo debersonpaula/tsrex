@@ -22,7 +22,6 @@ module.exports = (args, basePath) => {
     jestOptions = merge(jestBaseOptions, configReactData.jest);
   }
 
-
   // run tests
   return jest.runCLI(jestOptions, [basePath]);
 };
