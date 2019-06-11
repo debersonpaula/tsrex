@@ -2,6 +2,7 @@
 
 [![Version](https://img.shields.io/npm/v/tsrex.svg)](https://npmjs.org/package/tsrex)
 [![Downloads/week](https://img.shields.io/npm/dw/tsrex.svg)](https://npmjs.org/package/tsrex)
+![Azure DevOps builds](https://img.shields.io/azure-devops/build/fallenjackal/JTech/2.svg)
 
 ### <b>T</b>ype<b>S</b>cript <b>R</b>eact <b>EX</b>Redux
 
