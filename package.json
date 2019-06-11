@@ -82,7 +82,7 @@
   },
   "devDependencies": {
     "@babel/cli": "7.4.4",
-    "webpack-cli": "3.3.2",
+    "webpack-cli": "3.3.4",
     "webpack-node-externals": "1.7.2"
   }
 }
