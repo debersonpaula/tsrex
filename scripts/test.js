@@ -16,11 +16,10 @@ module.exports = (args, basePath) => {
     configReactData.source
   );
 
-  let jestOptions = jestBaseOptions;
+  let jestOptions = configReactData.jest ? merge(jestBaseOptions, configReactData.jest) : jestBaseOptions;
 
-  if (configReactData.jest) {
-    jestOptions = merge(jestBaseOptions, configReactData.jest);
-  }
+  // stringify the modules to be accepted in jest run cli
+  jestOptions.moduleNameMapper = JSON.stringify(jestOptions.moduleNameMapper);
 
   // run tests
   return jest.runCLI(jestOptions, [basePath]);
