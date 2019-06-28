@@ -1,7 +1,7 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "index.js",
   "scripts": {
     "build": "npm run build:binary && npm run build:copy && npm run build:utils",
@@ -52,8 +52,8 @@
     "babel-plugin-transform-typescript-metadata": "0.2.2",
     "chalk": "2.4.2",
     "clean-webpack-plugin": "2.0.2",
-    "css-loader": "2.1.1",
-    "deepmerge": "3.2.0",
+    "css-loader": "3.0.0",
+    "deepmerge": "3.3.0",
     "enzyme": "3.9.0",
     "enzyme-adapter-react-16": "1.13.1",
     "enzyme-to-json": "3.3.5",
