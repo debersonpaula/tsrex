@@ -10,7 +10,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
 
-module.exports = function(
+module.exports = function (
   webpackEnv,
   basePath,
   configReactData = {
@@ -23,6 +23,7 @@ module.exports = function(
     library: false,
     outputStatic: null,
     reactHotLoader: false,
+    plugins: []
   }
 ) {
   const isEnvDevelopment = webpackEnv === 'development';
@@ -45,9 +46,9 @@ module.exports = function(
     // ==== ENTRY ============================================================================
     entry: [
       isEnvDevelopment &&
-        `webpack-dev-server/client?http://${configReactData.host}:${
-          configReactData.port
-        }`,
+      `webpack-dev-server/client?http://${configReactData.host}:${
+      configReactData.port
+      }`,
       isEnvDevelopment && 'webpack/hot/dev-server',
       path.join(sourcePath, 'index.tsx'),
     ].filter(Boolean),
@@ -111,49 +112,50 @@ module.exports = function(
       plugins: [new TsConfigPathsPlugin()],
       alias: configReactData.reactHotLoader
         ? {
-            'react-dom': '@hot-loader/react-dom',
-          }
+          'react-dom': '@hot-loader/react-dom',
+        }
         : {},
     },
     // ==== PLUGINS ===========================================================================
     plugins: [
       !isEnvLibrary &&
-        !isEnvStatic &&
-        new HTMLWebpackPlugin({
-          template: path.join(sourcePath, 'index.html'),
-          inject: true,
-          ...configReactData.htmlEnv,
-          ...(isEnvProduction && {
-            minify: {
-              collapseWhitespace: true,
-              collapseInlineTagWhitespace: true,
-              keepClosingSlash: true,
-              minifyCSS: true,
-              minifyJS: true,
-              removeAttributeQuotes: true,
-              removeComments: true,
-              removeEmptyAttributes: true,
-              removeRedundantAttributes: true,
-            },
-          }),
+      !isEnvStatic &&
+      new HTMLWebpackPlugin({
+        template: path.join(sourcePath, 'index.html'),
+        inject: true,
+        ...configReactData.htmlEnv,
+        ...(isEnvProduction && {
+          minify: {
+            collapseWhitespace: true,
+            collapseInlineTagWhitespace: true,
+            keepClosingSlash: true,
+            minifyCSS: true,
+            minifyJS: true,
+            removeAttributeQuotes: true,
+            removeComments: true,
+            removeEmptyAttributes: true,
+            removeRedundantAttributes: true,
+          },
         }),
+      }),
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
       new webpack.EnvironmentPlugin(nodeEnv),
       isEnvProduction &&
-        new CleanWebpackPlugin({
-          dry: false,
-          verbose: true,
-          cleanOnceBeforeBuildPatterns: [
-            path.join(basePath, configReactData.outputPath, '/**/*'),
-          ],
-        }),
+      new CleanWebpackPlugin({
+        dry: false,
+        verbose: true,
+        cleanOnceBeforeBuildPatterns: [
+          path.join(basePath, configReactData.outputPath, '/**/*'),
+        ],
+      }),
       isEnvProduction &&
-        !isEnvLibrary &&
-        !isEnvStatic &&
-        new BundleAnalyzerPlugin({
-          analyzerMode: 'static',
-          openAnalyzer: false,
-        }),
+      !isEnvLibrary &&
+      !isEnvStatic &&
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+      }),
+      ...configReactData.plugins
     ].filter(Boolean),
     // ==== OPTIMIZE ==========================================================================
     optimization: {
@@ -161,14 +163,14 @@ module.exports = function(
         isEnvLibrary || isEnvStatic
           ? undefined
           : {
-              cacheGroups: {
-                commons: {
-                  test: /[\\/]node_modules[\\/]/,
-                  name: 'vendor',
-                  chunks: 'all',
-                },
+            cacheGroups: {
+              commons: {
+                test: /[\\/]node_modules[\\/]/,
+                name: 'vendor',
+                chunks: 'all',
               },
             },
+          },
       minimize: true,
       minimizer: [
         new UglifyJsPlugin({

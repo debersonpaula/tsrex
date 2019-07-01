@@ -23,6 +23,7 @@ module.exports = function loadConfigFile(filename) {
       outputStatic: configObject.outputStatic,
       devServer: configObject.devServer,
       reactHotLoader: configObject.reactHotLoader,
+      plugins: configObject.plugins
     };
   } else {
     throw new Error(`Configuration file "${configFileName}" does not exists.`);

@@ -145,6 +145,18 @@ module.exports = {
 };
 ```
 
+## Webpack plugin customization
+
+In case if is necessary to customize webpack plugins, include _plugins_ property in your config file:
+
+```js
+module.exports = {
+  plugins: [
+    // insert your webpack plugins here
+  ]
+};
+```
+
 ## Enable React Hot Loader
 
 This utility, enables the plugin __react-hot-loader__, that increments your application without losing the current state.

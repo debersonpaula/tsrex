@@ -32,4 +32,8 @@ module.exports = {
     },
     updateSnapshot: true,
   },
+
+  plugins: [
+    // insert your webpack plugins here
+  ]
 };
