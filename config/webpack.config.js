@@ -130,11 +130,7 @@ module.exports = function (
             collapseInlineTagWhitespace: true,
             keepClosingSlash: true,
             minifyCSS: true,
-            minifyJS: true,
-            removeAttributeQuotes: true,
-            removeComments: true,
-            removeEmptyAttributes: true,
-            removeRedundantAttributes: true,
+            minifyJS: true
           },
         }),
       }),
