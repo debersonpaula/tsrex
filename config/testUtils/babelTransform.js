@@ -4,7 +4,12 @@ module.exports = require('babel-jest').createTransformer({
   presets: [
     '@babel/react',
     '@babel/typescript',
-    ['@babel/env', { modules: false }]
+    ['@babel/env', {
+      modules: false,
+      targets: {
+        node: 'current',
+      }
+    }]
   ],
   plugins: [
     "babel-plugin-transform-typescript-metadata",
