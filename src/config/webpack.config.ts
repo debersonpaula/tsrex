@@ -141,14 +141,6 @@ export default function(
           analyzerMode: 'static',
           openAnalyzer: false,
         }),
-      // SOURCE MAPS
-      // isEnvDevelopment &&
-      // new webpack.SourceMapDevToolPlugin({
-      //   filename: '[file].map',
-      //   append: `\n//# sourceMappingURL=//internal-svr:3333/[url]`,
-      // }),
-      // new webpack.SourceMapDevToolPlugin(),
-
       ...configReactData.plugins,
     ].filter(Boolean),
     // ==== OPTIMIZE ==========================================================================

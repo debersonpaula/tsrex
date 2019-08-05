@@ -13,8 +13,6 @@ copyRoot('tslint.json');
 copyRoot('readme.md');
 copyRoot('package.json');
 
-// fs.copyFileSync(path.join(__dirname, '../bin/index.js'), path.join(__dirname, '../dist-bin/index.js'));
-
 const binaryCaller = `#!/usr/bin/env node
 require('./tsrex');`;
 fs.writeFileSync(path.join(__dirname, '../dist-bin/index.js'), binaryCaller);

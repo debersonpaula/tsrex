@@ -1,9 +1,4 @@
-// import './babelTransform';
-import babelTransform from './babelTransform';
-import babelTransformES6 from './babelTransformES6';
-
-// tslint:disable: no-evalx
-
+// tslint:disable: no-eval
 export default function(source: string) {
   return {
     testMatch: [`<rootDir>/${source}/**/*.test.{js,jsx,ts,tsx}`],
@@ -11,11 +6,6 @@ export default function(source: string) {
       '^.+\\.(ts|tsx)$': eval(`require.resolve('./babelTransform')`),
       '^.+\\.(js|jsx)$': eval(`require.resolve('./babelTransformES6')`),
     }),
-    // transform: {
-    //   '^.+\\.(ts|tsx)$': babelTransform,
-    //   '^.+\\.(js|jsx)$': babelTransformES6,
-    // },
-
     clearMocks: true,
     collectCoverage: true,
     coverageReporters: ['json', 'html', 'lcovonly', 'cobertura'],
@@ -31,16 +21,14 @@ export default function(source: string) {
 
     moduleFileExtensions: ['ts', 'tsx', 'js'],
     moduleNameMapper: {
-      // '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': eval(
-      //   `require.resolve('./fileMock')`
-      // ),
-      // '\\.(css)$': eval(`require.resolve('./styleMock')`),
+      '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': eval(
+        `require.resolve('./fileMock')`
+      ),
+      '\\.(css)$': eval(`require.resolve('./styleMock')`),
     },
     setupFiles: [
       eval(`require.resolve('./test-setup')`),
       eval(`require.resolve('./test-shim')`),
-      // require('./testSetup'),
-      // require('./testShim'),
     ],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     verbose: true,

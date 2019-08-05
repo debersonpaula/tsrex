@@ -5,7 +5,6 @@ module.exports = {
 	target: 'node',
 	mode: 'production',
 	// ==== ENTRY ============================================================================
-	// entry: [path.join(__dirname, '../bin/tsrex.js')],
 	entry: [path.join(__dirname, '../src/tsrex.ts')],
 	// ==== OUTPUT ===========================================================================
 	output: {
@@ -39,12 +38,7 @@ module.exports = {
 		}),
 	],
 
-	// optimization: {
-	// 	minimize: false, // <---- disables uglify.
-	// 	// minimizer: [new UglifyJsPlugin()] if you want to customize it.
-	// },
 	// ==== EXTERNALS =========================================================================
-	// externals: [nodeExternals()],
 	externals: generateExternals([
 		'awesome-typescript-loader',
 		'axios',
