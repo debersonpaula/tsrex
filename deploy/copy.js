@@ -13,15 +13,19 @@ copyRoot('tslint.json');
 copyRoot('readme.md');
 copyRoot('package.json');
 
-fs.copyFileSync(path.join(__dirname, '../bin/index.js'), path.join(__dirname, '../dist-bin/index.js'));
+// fs.copyFileSync(path.join(__dirname, '../bin/index.js'), path.join(__dirname, '../dist-bin/index.js'));
+
+const binaryCaller = `#!/usr/bin/env node
+require('./tsrex');`;
+fs.writeFileSync(path.join(__dirname, '../dist-bin/index.js'), binaryCaller);
 
 // ===== UTILS =============================================================
 function copyTestUtil(name) {
-  fs.copyFileSync(path.join(__dirname, `../config/testUtils/${name}.js`), path.join(__dirname, `../dist-bin/${name}.js`));
+  fs.copyFileSync(path.join(__dirname, `../src/config/testUtils/${name}.js`), path.join(__dirname, `../dist-bin/${name}.js`));
 }
 
 function copyMocks(name) {
-  fs.copyFileSync(path.join(__dirname, `../config/mocks/${name}.js`), path.join(__dirname, `../dist-bin/${name}.js`));
+  fs.copyFileSync(path.join(__dirname, `../src/config/mocks/${name}.js`), path.join(__dirname, `../dist-bin/${name}.js`));
 }
 
 function copyRoot(name) {

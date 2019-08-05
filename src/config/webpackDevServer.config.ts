@@ -1,5 +1,13 @@
-module.exports = function(host, https, override) {
+import WebpackDevServer from 'webpack-dev-server';
+
+export default function(
+  host: string,
+  https?: boolean,
+  override?: Object
+): WebpackDevServer.Configuration {
   return {
+    host,
+    https,
     // Enable gzip compression of generated files.
     compress: true,
     // Enable hot reloading server. It will provide /sockjs-node/ endpoint
@@ -12,9 +20,7 @@ module.exports = function(host, https, override) {
     // as we specified in the config. In development, we always serve from /.
     publicPath: '/',
     // Enable HTTPS if the HTTPS environment variable is set to 'true'
-    https: https === 'https',
-    host,
     overlay: false,
-    ...override
+    ...override,
   };
-};
+}

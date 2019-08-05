@@ -35,5 +35,9 @@ module.exports = {
 
   plugins: [
     // insert your webpack plugins here
-  ]
+  ],
+
+  devServer: {
+    open: true
+  }
 };

@@ -1,39 +1,71 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-var nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  target: 'node',
-  externals: [nodeExternals()],
-  mode: 'production',
-  // ==== ENTRY ============================================================================
-  entry: [path.join(__dirname, '../bin/tsrex.js')],
-  // ==== OUTPUT ===========================================================================
-  output: {
-    path: path.join(__dirname, '../dist-bin'),
-    filename: 'tsrex.js',
-  },
-  // ==== MODULE ===========================================================================
-  module: {
-    strictExportPresence: true,
-    rules: [
-      {
-        test: /\.js$/,
-      },
-    ],
-  },
-  // ==== RESOLVE ===========================================================================
-  resolve: {
-    extensions: ['.js'],
-  },
-  // ==== PLUGINS ===========================================================================
-  plugins: [
-    new CleanWebpackPlugin({
-      dry: false,
-      verbose: true,
-      cleanOnceBeforeBuildPatterns: [
-        path.join(__dirname, '../dist-bin', '/**/*'),
-      ],
-    }),
-  ],
+	target: 'node',
+	mode: 'production',
+	// ==== ENTRY ============================================================================
+	// entry: [path.join(__dirname, '../bin/tsrex.js')],
+	entry: [path.join(__dirname, '../src/tsrex.ts')],
+	// ==== OUTPUT ===========================================================================
+	output: {
+		path: path.join(__dirname, '../dist-bin'),
+		filename: 'tsrex.js',
+		sourcePrefix: '',
+		libraryTarget: 'commonjs',
+	},
+	// ==== MODULE ===========================================================================
+	module: {
+		strictExportPresence: true,
+		rules: [
+			{
+				test: /\.js$/,
+			},
+			{ test: /\.tsx?$/, loader: 'ts-loader' },
+		],
+	},
+	// ==== RESOLVE ===========================================================================
+	resolve: {
+		extensions: ['.ts', '.tsx', '.js'],
+	},
+	// ==== PLUGINS ===========================================================================
+	plugins: [
+		new CleanWebpackPlugin({
+			dry: false,
+			verbose: true,
+			cleanOnceBeforeBuildPatterns: [
+				path.join(__dirname, '../dist-bin', '/**/*'),
+			],
+		}),
+	],
+
+	// optimization: {
+	// 	minimize: false, // <---- disables uglify.
+	// 	// minimizer: [new UglifyJsPlugin()] if you want to customize it.
+	// },
+	// ==== EXTERNALS =========================================================================
+	// externals: [nodeExternals()],
+	externals: generateExternals([
+		'awesome-typescript-loader',
+		'axios',
+		'enzyme',
+		'exredux',
+		'html-webpack-plugin',
+		'jest',
+		'react',
+		'react-dom',
+		'uglifyjs-webpack-plugin',
+		'webpack',
+		'webpack-bundle-analyzer',
+		'webpack-dev-server'
+	]),
 };
+
+function generateExternals(list) {
+	return list.reduce((total, current) => {
+		total[current] = {
+			commonjs: current,
+		};
+		return total;
+	}, {});
+}
