@@ -1,14 +1,15 @@
-const fs = require('fs');
-const path = require("path");
+import fs from 'fs';
+import path from 'path';
+import { ITSREXConfig } from './ITSREXConfig';
 
 /**
  * Load configuration file
- * @param {*} filename
  */
-module.exports = function loadConfigFile(filename) {
+export default function loadConfigFile(filename: string): ITSREXConfig {
   const configFileName = path.resolve(process.cwd(), filename);
   if (fs.existsSync(configFileName)) {
     const configObjectRaw = fs.readFileSync(configFileName);
+    // tslint:disable-next-line: no-eval
     const configObject = eval(configObjectRaw.toString());
 
     return {
@@ -23,9 +24,8 @@ module.exports = function loadConfigFile(filename) {
       outputStatic: configObject.outputStatic,
       devServer: configObject.devServer,
       reactHotLoader: configObject.reactHotLoader,
-      plugins: configObject.plugins || []
+      plugins: configObject.plugins || [],
     };
-  } else {
-    throw new Error(`Configuration file "${configFileName}" does not exists.`);
   }
+  throw new Error(`Configuration file "${configFileName}" does not exists.`);
 }

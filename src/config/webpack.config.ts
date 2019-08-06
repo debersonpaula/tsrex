@@ -1,31 +1,20 @@
-'use strict';
+import webpack from 'webpack';
+import path from 'path';
+import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
+import HTMLWebpackPlugin from 'html-webpack-plugin';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import CleanWebpackPlugin from 'clean-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
-const path = require('path');
-const TsConfigPathsPlugin = require('awesome-typescript-loader')
-  .TsConfigPathsPlugin;
-const HTMLWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin;
+import { ITSREXConfig } from '../scripts/utils/ITSREXConfig';
 
-module.exports = function (
-  webpackEnv,
-  basePath,
-  configReactData = {
-    source: '',
-    port: 0,
-    host: '',
-    outputPath: '',
-    nodeEnv: {},
-    htmlEnv: {},
-    library: false,
-    outputStatic: null,
-    reactHotLoader: false,
-    plugins: []
-  }
-) {
+import webpackOutputConfig from './output.config';
+
+export default function(
+  webpackEnv: 'production' | 'development',
+  basePath: string,
+  configReactData: ITSREXConfig
+): webpack.Configuration {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const isEnvLibrary = configReactData.library;
@@ -39,25 +28,20 @@ module.exports = function (
     ...configReactData.nodeEnv,
   };
 
-  const config = {
-    mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
-    devtool: isEnvDevelopment && 'source-map',
+  const config: webpack.Configuration = {
+    mode: webpackEnv,
     context: isEnvLibrary ? basePath : undefined,
     // ==== ENTRY ============================================================================
     entry: [
       isEnvDevelopment &&
-      `webpack-dev-server/client?http://${configReactData.host}:${
-      configReactData.port
-      }`,
+        `webpack-dev-server/client?http://${configReactData.host}:${
+          configReactData.port
+        }`,
       isEnvDevelopment && 'webpack/hot/dev-server',
       path.join(sourcePath, 'index.tsx'),
     ].filter(Boolean),
     // ==== OUTPUT ===========================================================================
-    output: require('./helpers/output.config')(
-      webpackEnv,
-      basePath,
-      configReactData
-    ),
+    output: webpackOutputConfig(webpackEnv, basePath, configReactData),
     // ==== MODULE ===========================================================================
     module: {
       // makes missing exports an error instead of warning
@@ -112,46 +96,52 @@ module.exports = function (
       plugins: [new TsConfigPathsPlugin()],
       alias: configReactData.reactHotLoader
         ? {
-          'react-dom': '@hot-loader/react-dom',
-        }
+            'react-dom': '@hot-loader/react-dom',
+          }
         : {},
     },
     // ==== PLUGINS ===========================================================================
     plugins: [
+      // HTML
       !isEnvLibrary &&
-      !isEnvStatic &&
-      new HTMLWebpackPlugin({
-        template: path.join(sourcePath, 'index.html'),
-        inject: true,
-        ...configReactData.htmlEnv,
-        ...(isEnvProduction && {
-          minify: {
-            collapseWhitespace: true,
-            collapseInlineTagWhitespace: true,
-            keepClosingSlash: true,
-            minifyCSS: true,
-            minifyJS: true
-          },
+        !isEnvStatic &&
+        new HTMLWebpackPlugin({
+          template: path.join(sourcePath, 'index.html'),
+          inject: true,
+          ...configReactData.htmlEnv,
+          ...(isEnvProduction && {
+            minify: {
+              collapseWhitespace: true,
+              collapseInlineTagWhitespace: true,
+              keepClosingSlash: true,
+              minifyCSS: true,
+              minifyJS: true,
+            },
+          }),
         }),
-      }),
+
+      // HOT RELOAD
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
+      // NODE ENV
       new webpack.EnvironmentPlugin(nodeEnv),
+      // CLEARER
       isEnvProduction &&
-      new CleanWebpackPlugin({
-        dry: false,
-        verbose: true,
-        cleanOnceBeforeBuildPatterns: [
-          path.join(basePath, configReactData.outputPath, '/**/*'),
-        ],
-      }),
+        new CleanWebpackPlugin({
+          dry: false,
+          verbose: true,
+          cleanOnceBeforeBuildPatterns: [
+            path.join(basePath, configReactData.outputPath, '/**/*'),
+          ],
+        }),
+      // BUNDLE ANALYSER
       isEnvProduction &&
-      !isEnvLibrary &&
-      !isEnvStatic &&
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-      }),
-      ...configReactData.plugins
+        !isEnvLibrary &&
+        !isEnvStatic &&
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'static',
+          openAnalyzer: false,
+        }),
+      ...configReactData.plugins,
     ].filter(Boolean),
     // ==== OPTIMIZE ==========================================================================
     optimization: {
@@ -159,14 +149,14 @@ module.exports = function (
         isEnvLibrary || isEnvStatic
           ? undefined
           : {
-            cacheGroups: {
-              commons: {
-                test: /[\\/]node_modules[\\/]/,
-                name: 'vendor',
-                chunks: 'all',
+              cacheGroups: {
+                commons: {
+                  test: /[\\/]node_modules[\\/]/,
+                  name: 'vendor',
+                  chunks: 'all',
+                },
               },
             },
-          },
       minimize: true,
       minimizer: [
         new UglifyJsPlugin({
@@ -220,5 +210,9 @@ module.exports = function (
     };
   }
 
+  if (isEnvDevelopment) {
+    config.devtool = 'eval-source-map';
+  }
+
   return config;
-};
+}

@@ -1,17 +1,21 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-var nodeExternals = require('webpack-node-externals');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   target: 'node',
-  externals: [nodeExternals()],
   mode: 'production',
+  node: {
+    __dirname: false,
+  },
   // ==== ENTRY ============================================================================
-  entry: [path.join(__dirname, '../bin/tsrex.js')],
+  entry: [path.join(__dirname, '../dist-src/tsrex.js')],
   // ==== OUTPUT ===========================================================================
   output: {
     path: path.join(__dirname, '../dist-bin'),
     filename: 'tsrex.js',
+    sourcePrefix: '',
+    libraryTarget: 'commonjs',
   },
   // ==== MODULE ===========================================================================
   module: {
@@ -24,7 +28,7 @@ module.exports = {
   },
   // ==== RESOLVE ===========================================================================
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.ts', '.tsx', '.js'],
   },
   // ==== PLUGINS ===========================================================================
   plugins: [
@@ -35,5 +39,52 @@ module.exports = {
         path.join(__dirname, '../dist-bin', '/**/*'),
       ],
     }),
+    new CopyWebpackPlugin([
+      {
+        from: './src/config/addons',
+        to: '',
+      },
+      {
+        from: './tsconfig.json',
+        to: '',
+      },
+      {
+        from: './tslint.json',
+        to: '',
+      },
+      {
+        from: './readme.md',
+        to: '',
+      },
+      {
+        from: './package.json',
+        to: '',
+      },
+    ]),
   ],
+
+  // ==== EXTERNALS =========================================================================
+  externals: generateExternals([
+    'awesome-typescript-loader',
+    'axios',
+    'enzyme',
+    'exredux',
+    'html-webpack-plugin',
+    'jest',
+    'react',
+    'react-dom',
+    'uglifyjs-webpack-plugin',
+    'webpack',
+    'webpack-bundle-analyzer',
+    'webpack-dev-server',
+  ]),
 };
+
+function generateExternals(list) {
+  return list.reduce((total, current) => {
+    total[current] = {
+      commonjs: current,
+    };
+    return total;
+  }, {});
+}
