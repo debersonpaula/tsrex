@@ -2,7 +2,7 @@ import loadConfigFile from './utils/loadConfigFile';
 import jest from 'jest';
 import deepmerge from 'deepmerge';
 import { IScriptCallback } from './utils/IScriptCallback';
-import jestBaseConfig from '../config/testUtils/jestBaseConfig';
+import jestBaseConfig from '../config/jestBaseConfig';
 
 const script: IScriptCallback = (args: string[], basePath: string) => {
   // get config filename
