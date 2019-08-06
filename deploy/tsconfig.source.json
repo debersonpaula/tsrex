@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["../utils/**/*"],
+  "include": ["../src/**/*"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
-    "outDir": "../dist-bin/utils",
+    "outDir": "../dist-src",
     "moduleResolution": "node",
     "skipLibCheck": true
   }

@@ -1,11 +1,15 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 	target: 'node',
 	mode: 'production',
+	node: {
+		__dirname: false
+	},
 	// ==== ENTRY ============================================================================
-	entry: [path.join(__dirname, '../src/tsrex.ts')],
+	entry: [path.join(__dirname, '../dist-src/tsrex.js')],
 	// ==== OUTPUT ===========================================================================
 	output: {
 		path: path.join(__dirname, '../dist-bin'),
@@ -19,8 +23,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
-			},
-			{ test: /\.tsx?$/, loader: 'ts-loader' },
+			}
 		],
 	},
 	// ==== RESOLVE ===========================================================================
@@ -36,6 +39,11 @@ module.exports = {
 				path.join(__dirname, '../dist-bin', '/**/*'),
 			],
 		}),
+		new CopyWebpackPlugin([
+			{
+				from: './dist-src/config/loaders', to: 'loaders'
+			}
+		])
 	],
 
 	// ==== EXTERNALS =========================================================================
