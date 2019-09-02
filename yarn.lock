@@ -3389,10 +3389,10 @@ express@^4.16.3, express@^4.17.1:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
-exredux@1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/exredux/-/exredux-1.0.9.tgz#f1d22a2022528a1129af3c8b9a56b5ef84fd274a"
-  integrity sha512-u21S1UhD3i/Sr+4IeP+q6pndDlWOLzX0svmt4jr+msYzi2ckUS1A2eu9Q3GiijRSrNoHDkXaeA1LgSzwnpsHTQ==
+exredux@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/exredux/-/exredux-1.0.10.tgz#18fc10f4fc5feefd7b97890605244356c885ec56"
+  integrity sha512-WpGvRVYxLVqepiZ/8++GQLFSb6qAA8C0MS8nF0JHbmiweSJjgifLWf8/payEpUZw+JF7r3nrMvT7UjPmk7b1qw==
   dependencies:
     axios "0.19.0"
     react-redux "7.0.3"
