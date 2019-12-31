@@ -3,6 +3,7 @@ import { Provider } from 'exredux';
 import { Counter } from './counter/Counter';
 import { modelStore } from './modelStore';
 import { List } from './list/List';
+import { RouterExample } from './RouterExample';
 
 export class App extends React.Component {
   render() {
@@ -26,6 +27,9 @@ export class App extends React.Component {
           <Counter />
           <hr />
           <List />
+
+          <hr />
+          <RouterExample />
         </div>
       </Provider>
     );
