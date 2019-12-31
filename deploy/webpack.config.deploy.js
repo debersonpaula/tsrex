@@ -73,6 +73,7 @@ module.exports = {
     'jest',
     'react',
     'react-dom',
+    'terser-webpack-plugin',
     'uglifyjs-webpack-plugin',
     'webpack',
     'webpack-bundle-analyzer',

@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import path from 'path';
 import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
 import HTMLWebpackPlugin from 'html-webpack-plugin';
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
@@ -34,9 +34,7 @@ export default function(
     // ==== ENTRY ============================================================================
     entry: [
       isEnvDevelopment &&
-        `webpack-dev-server/client?http://${configReactData.host}:${
-          configReactData.port
-        }`,
+        `webpack-dev-server/client?http://${configReactData.host}:${configReactData.port}`,
       isEnvDevelopment && 'webpack/hot/dev-server',
       path.join(sourcePath, 'index.tsx'),
     ].filter(Boolean),
@@ -159,14 +157,8 @@ export default function(
             },
       minimize: true,
       minimizer: [
-        new UglifyJsPlugin({
-          cache: isEnvDevelopment,
+        new TerserPlugin({
           parallel: true,
-          uglifyOptions: {
-            compress: isEnvProduction,
-            mangle: false,
-            beautify: isEnvDevelopment,
-          },
           sourceMap: isEnvDevelopment,
         }),
       ],
