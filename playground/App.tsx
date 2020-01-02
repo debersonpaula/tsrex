@@ -4,6 +4,7 @@ import { Counter } from './counter/Counter';
 import { modelStore } from './modelStore';
 import { List } from './list/List';
 import { RouterExample } from './RouterExample';
+import { PageWithCss } from './styles/PageWithCss';
 
 export class App extends React.Component {
   render() {
@@ -30,6 +31,9 @@ export class App extends React.Component {
 
           <hr />
           <RouterExample />
+
+          <hr />
+          <PageWithCss />
         </div>
       </Provider>
     );
