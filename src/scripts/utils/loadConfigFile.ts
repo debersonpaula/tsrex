@@ -9,8 +9,15 @@ export default function loadConfigFile(filename: string): ITSREXConfig {
   const configFileName = path.resolve(process.cwd(), filename);
   if (fs.existsSync(configFileName)) {
     const configObjectRaw = fs.readFileSync(configFileName);
-    // tslint:disable-next-line: no-eval
-    const configObject = eval(configObjectRaw.toString());
+
+    let configObject: ITSREXConfig;
+
+    try {
+      // tslint:disable-next-line: no-eval
+      configObject = eval(configObjectRaw.toString());
+    } catch (error) {
+      throw new Error(`Configuration file "${configFileName}" does not .`);
+    }
 
     return {
       source: configObject.source,
@@ -25,6 +32,7 @@ export default function loadConfigFile(filename: string): ITSREXConfig {
       devServer: configObject.devServer,
       reactHotLoader: configObject.reactHotLoader,
       plugins: configObject.plugins || [],
+      webpack: configObject.webpack || {},
     };
   }
   throw new Error(`Configuration file "${configFileName}" does not exists.`);

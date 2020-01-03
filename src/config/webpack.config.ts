@@ -206,5 +206,5 @@ export default function(
     config.devtool = 'eval-source-map';
   }
 
-  return config;
+  return Object.assign({}, config, configReactData.webpack);
 }
