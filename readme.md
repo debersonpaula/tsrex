@@ -147,13 +147,26 @@ module.exports = {
 
 ## Webpack plugin customization
 
-In case if is necessary to customize webpack plugins, include _plugins_ property in your config file:
+### !!! THIS OPTIONS IS DEPRECATED !!!
+Don't use this option. Use _webpack_ instead
 
 ```js
+// DEPRECATED
 module.exports = {
   plugins: [
     // insert your webpack plugins here
   ]
+};
+```
+
+## Webpack options customization
+
+Any properties defined in this property will override TSREX config:
+```js
+module.exports = {
+  webpack: {
+    // insert your config here
+  }
 };
 ```
 

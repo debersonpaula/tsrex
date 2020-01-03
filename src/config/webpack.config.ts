@@ -159,7 +159,16 @@ export default function(
       minimizer: [
         new TerserPlugin({
           parallel: true,
-          sourceMap: isEnvDevelopment,
+          sourceMap: false,
+          terserOptions: {
+            compress: false,
+            keep_fnames: true,
+            keep_classnames: true,
+            mangle: {
+              keep_fnames: true,
+              keep_classnames: true,
+            },
+          },
         }),
       ],
       usedExports: isEnvProduction,
