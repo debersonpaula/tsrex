@@ -1,13 +1,14 @@
 import webpack = require('webpack');
 
-type EnvKeyValues = { [key: string]: string };
+interface IEnvKeyValues { [key: string]: string }
 
 interface ITSREXConfigBase {
   source: string;
+  sourceFile: string;
   port: number;
   host: string;
-  nodeEnv: EnvKeyValues;
-  htmlEnv: EnvKeyValues;
+  nodeEnv: IEnvKeyValues;
+  htmlEnv: IEnvKeyValues;
   outputPath: string;
   library: boolean;
   jest: any;
@@ -29,4 +30,4 @@ interface ITSREXConfigBase {
   webpack: webpack.Configuration;
 }
 
-export type ITSREXConfig = Partial<ITSREXConfigBase>;
+export type ITSREXConfig = ITSREXConfigBase;

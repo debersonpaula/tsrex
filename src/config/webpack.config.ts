@@ -21,6 +21,7 @@ export default function(
   const isEnvStatic = configReactData.outputStatic != null;
 
   const sourcePath = path.resolve(basePath, configReactData.source);
+  const sourceFile = configReactData.sourceFile;
   const nodeEnv = {
     isEnvDevelopment: isEnvDevelopment.toString(),
     isEnvProduction: isEnvProduction.toString(),
@@ -36,7 +37,7 @@ export default function(
       isEnvDevelopment &&
         `webpack-dev-server/client?http://${configReactData.host}:${configReactData.port}`,
       isEnvDevelopment && 'webpack/hot/dev-server',
-      path.join(sourcePath, 'index.tsx'),
+      path.join(sourcePath, sourceFile || 'index.tsx'),
     ].filter(Boolean),
     // ==== OUTPUT ===========================================================================
     output: webpackOutputConfig(webpackEnv, basePath, configReactData),
