@@ -1,7 +1,7 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "0.2.1",
+  "version": "0.2.3",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist-src/ && npm run build:source && npm run build:binary && npm run build:utils && node ./deploy/post-build.js",
