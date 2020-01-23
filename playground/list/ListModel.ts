@@ -1,7 +1,6 @@
-import { Model, Action, Inject } from 'exredux';
+import { Action, Inject } from 'exredux';
 import { CounterModel } from '../counter/CounterModel';
 
-@Model
 export class ListModel {
   items: string[] = [];
 
@@ -9,6 +8,8 @@ export class ListModel {
 
   @Action add() {
     this.counterModel.add();
-    this.items.push(`Item ${this.items.length} : Counter = ${this.counterModel.counter}`);
+    this.items.push(
+      `Item ${this.items.length} : Counter = ${this.counterModel.counter}`
+    );
   }
 }

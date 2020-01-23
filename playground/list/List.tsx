@@ -1,17 +1,13 @@
 import * as React from 'react';
 import { Connection, Inject } from 'exredux';
 import { ListModel } from './ListModel';
-import { modelStore } from '../modelStore';
 
 class ModelProps {
   @Inject listModel: ListModel;
 }
 type Props = Partial<ModelProps>;
 
-@Connection({
-  modelStore,
-  props: ModelProps
-})
+@Connection(ModelProps)
 export class List extends React.Component<Props> {
   render() {
     const { listModel } = this.props;
