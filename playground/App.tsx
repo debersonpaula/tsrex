@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { Provider } from 'exredux';
 import { Counter } from './counter/Counter';
-import { modelStore } from './modelStore';
 import { List } from './list/List';
 import { RouterExample } from './RouterExample';
 import { PageWithCss } from './styles/PageWithCss';
+import { CounterModel } from './counter/CounterModel';
+import { ListModel } from './list/ListModel';
 
 export class App extends React.Component {
   render() {
     return (
-      <Provider modelStore={modelStore}>
+      <Provider models={[CounterModel, ListModel]}>
         <div>
           <h2>React App</h2>
           <p>Testing TSREx</p>

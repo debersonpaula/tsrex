@@ -20,6 +20,8 @@
     "jsx-no-multiline-js": false,
     "jsx-wrap-multiline": false,
     "object-literal-key-quotes": false,
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-classes-per-file": false,
+    "member-access": false
   }
 }

@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { Connection, Inject } from 'exredux';
-import { modelStore } from '../modelStore';
 import { CounterModel } from './CounterModel';
 
 class ModelProps {
   @Inject counterModel?: CounterModel;
 }
 
-@Connection({
-  modelStore,
-  props: ModelProps,
-})
+@Connection(ModelProps)
 export class Counter extends React.Component<ModelProps> {
   render() {
     const { counterModel } = this.props;
