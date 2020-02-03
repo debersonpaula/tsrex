@@ -1,7 +1,7 @@
 {
   "name": "tsrex",
   "description": "Typescript + React + ExRedux",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "build": "rm -rf dist-src/ && npm run build:source && npm run build:binary && npm run build:utils && node ./deploy/post-build.js",
@@ -35,6 +35,7 @@
     "@babel/plugin-proposal-class-properties": "7.7.4",
     "@babel/plugin-proposal-decorators": "7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "7.7.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/plugin-transform-modules-commonjs": "7.7.5",
     "@babel/preset-env": "7.7.7",
     "@babel/preset-react": "7.7.4",

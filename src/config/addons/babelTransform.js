@@ -16,6 +16,7 @@ module.exports = require('babel-jest').createTransformer({
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-object-rest-spread',
-    'transform-es2015-modules-commonjs'
+    'transform-es2015-modules-commonjs',
+    '@babel/plugin-proposal-optional-chaining'
   ]
 });
