@@ -10,11 +10,12 @@ export default function(
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const isEnvLibrary = configReactData.library;
+  const outputPath = path.join(basePath, configReactData.outputPath);
 
   if (isEnvLibrary) {
     return {
       filename: 'index.js',
-      path: path.join(basePath, configReactData.outputPath),
+      path: outputPath,
       libraryTarget: 'umd',
       umdNamedDefine: true,
     };
@@ -23,15 +24,13 @@ export default function(
   if (configReactData.outputStatic != null) {
     return {
       filename: `${configReactData.outputStatic}.js`,
-      path: path.join(basePath, configReactData.outputPath),
+      path: outputPath,
     };
   }
 
   return {
     // The build folder.
-    path: isEnvProduction
-      ? path.join(basePath, configReactData.outputPath)
-      : undefined,
+    path: isEnvProduction ? outputPath : undefined,
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: isEnvDevelopment,
     // There will be one main bundle, and one file per asynchronous chunk.
