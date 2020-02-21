@@ -6,6 +6,7 @@ import { RouterExample } from './RouterExample';
 import { PageWithCss } from './styles/PageWithCss';
 import { CounterModel } from './counter/CounterModel';
 import { ListModel } from './list/ListModel';
+import { AssetPage } from './assets/AssetPage';
 
 export class App extends React.Component {
   render() {
@@ -35,6 +36,9 @@ export class App extends React.Component {
 
           <hr />
           <PageWithCss />
+
+          <hr />
+          <AssetPage />
         </div>
       </Provider>
     );
