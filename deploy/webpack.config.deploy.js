@@ -41,8 +41,12 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: './src/config/addons',
-        to: '',
+        from: './dist-src/config/addons',
+        to: 'addons',
+      },
+      {
+        from: './dist-src/config/utils',
+        to: 'utils',
       },
       {
         from: './tsconfig.json',
