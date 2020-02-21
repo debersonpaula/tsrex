@@ -18,6 +18,6 @@ export const babelLoader = (
     babelrc: false,
     configFile: false,
     presets: babelPresets(env),
-    plugins: babelPlugins(reactHotLoader),
+    plugins: babelPlugins(env, reactHotLoader),
   },
 });
