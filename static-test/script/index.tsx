@@ -6,4 +6,5 @@ function renderStaticApp(parentDom: HTMLElement) {
   ReactDOM.render(<App />, parentDom);
 }
 
+// tslint:disable-next-line: no-string-literal
 window['StaticApp'] = renderStaticApp;

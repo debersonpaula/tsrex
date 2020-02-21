@@ -6,6 +6,7 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
+    // tslint:disable-next-line: no-string-literal
     const StaticApp = window['StaticApp'];
     StaticApp(document.getElementById('static-content'));
   }
