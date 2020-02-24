@@ -1,6 +1,8 @@
 import webpack = require('webpack');
 
-interface IEnvKeyValues { [key: string]: string }
+interface IEnvKeyValues {
+  [key: string]: string;
+}
 
 interface ITSREXConfigBase {
   source: string;

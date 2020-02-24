@@ -3,8 +3,8 @@ export default function(source: string) {
   return {
     testMatch: [`<rootDir>/${source}/**/*.test.{js,jsx,ts,tsx}`],
     transform: JSON.stringify({
-      '^.+\\.(ts|tsx)$': eval(`require.resolve('./babelTransform')`),
-      '^.+\\.(js|jsx)$': eval(`require.resolve('./babelTransformES6')`),
+      '^.+\\.(ts|tsx)$': eval(`require.resolve('./addons/babelTransform')`),
+      '^.+\\.(js|jsx)$': eval(`require.resolve('./addons/babelTransformES6')`),
     }),
     clearMocks: true,
     collectCoverage: true,
@@ -22,13 +22,13 @@ export default function(source: string) {
     moduleFileExtensions: ['ts', 'tsx', 'js'],
     moduleNameMapper: {
       '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': eval(
-        `require.resolve('./fileMock')`
+        `require.resolve('./addons/fileMock')`
       ),
-      '\\.(css)$': eval(`require.resolve('./styleMock')`),
+      '\\.(css)$': eval(`require.resolve('./addons/styleMock')`),
     },
     setupFiles: [
-      eval(`require.resolve('./test-setup')`),
-      eval(`require.resolve('./test-shim')`),
+      eval(`require.resolve('./addons/test-setup')`),
+      eval(`require.resolve('./addons/test-shim')`),
     ],
     snapshotSerializers: ['enzyme-to-json/serializer'],
     verbose: true,

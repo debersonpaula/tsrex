@@ -22,8 +22,8 @@ export default function loadConfigFile(filename: string): ITSREXConfig {
     return {
       source: configObject.source,
       sourceFile: configObject.sourceFile,
-      port: configObject.port || 8080,
-      host: configObject.host || '0.0.0.0',
+      port: configObject.port || parseInt(process.env.PORT, 10) || 8080,
+      host: configObject.host || process.env.HOST || '0.0.0.0',
       nodeEnv: configObject.nodeEnv,
       htmlEnv: configObject.htmlEnv,
       outputPath: configObject.outputPath,

@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import chalk from 'chalk';
 import logger from './logger';
-import configWebpack from '../../config/webpack.config';
+import configWebpack from '../../config/webpackConfigFactory';
 import { ITSREXConfig } from './ITSREXConfig';
 
 export default function(

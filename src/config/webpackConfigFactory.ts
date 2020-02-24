@@ -1,20 +1,27 @@
+// tslint:disable: no-eval
 import webpack from 'webpack';
 import path from 'path';
 import { TsConfigPathsPlugin } from 'awesome-typescript-loader';
-import HTMLWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CleanWebpackPlugin from 'clean-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 import { ITSREXConfig } from '../scripts/utils/ITSREXConfig';
-
 import webpackOutputConfig from './output.config';
+import { babelLoader } from './rules/babelLoader';
+import { tsLintLoader } from './rules/tsLintLoader';
+import { urlLoader } from './rules/urlLoader';
+import { fileLoader } from './rules/fileLoader';
+import { styleLoader } from './rules/styleLoader';
+import { htmlConfigPlugin } from './plugins/htmlConfigPlugin';
+import { terserConfigPlugin } from './plugins/terserConfigPlugin';
 
 export default function(
   webpackEnv: 'production' | 'development',
   basePath: string,
   configReactData: ITSREXConfig
 ): webpack.Configuration {
+  // Environment setup
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
   const isEnvLibrary = configReactData.library;
@@ -30,8 +37,10 @@ export default function(
   };
 
   const config: webpack.Configuration = {
+    // ==== GENERAL ==========================================================================
     mode: webpackEnv,
     context: isEnvLibrary ? basePath : undefined,
+    bail: isEnvProduction, // Stop compilation early in production
     // ==== ENTRY ============================================================================
     entry: [
       isEnvDevelopment &&
@@ -45,48 +54,17 @@ export default function(
     module: {
       // makes missing exports an error instead of warning
       strictExportPresence: true,
-
       rules: [
+        // Disable require.ensure as it's not a standard language feature.
+        { parser: { requireEnsure: false } },
+        tsLintLoader(sourcePath),
         {
-          test: /\.(ts|tsx|js|jsx)?$/,
-          loader: 'babel-loader',
-          exclude: /node_modules/,
-          options: {
-            babelrc: false,
-            configFile: false,
-            presets: [
-              '@babel/react',
-              '@babel/typescript',
-              ['@babel/env', { modules: false }],
-            ],
-            plugins: [
-              'babel-plugin-transform-typescript-metadata',
-              ['@babel/plugin-proposal-decorators', { legacy: true }],
-              ['@babel/plugin-proposal-class-properties', { loose: true }],
-              '@babel/plugin-proposal-object-rest-spread',
-              '@babel/plugin-proposal-optional-chaining',
-              configReactData.reactHotLoader && 'react-hot-loader/babel',
-            ].filter(Boolean),
-          },
-        },
-        {
-          test: /\.css$/,
-          loader: 'style-loader!css-loader',
-        },
-        {
-          exclude: [
-            /\.html$/,
-            /\.jsx?$/,
-            /\.js?$/,
-            /\.tsx?$/,
-            /\.ts?$/,
-            /\.css$/,
+          oneOf: [
+            urlLoader(),
+            babelLoader(webpackEnv, configReactData.reactHotLoader),
+            styleLoader(),
+            fileLoader(),
           ],
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: 'assets/media/[name].[hash:8].[ext]',
-          },
         },
       ],
     },
@@ -105,20 +83,11 @@ export default function(
       // HTML
       !isEnvLibrary &&
         !isEnvStatic &&
-        new HTMLWebpackPlugin({
-          template: path.join(sourcePath, 'index.html'),
-          inject: true,
-          ...configReactData.htmlEnv,
-          ...(isEnvProduction && {
-            minify: {
-              collapseWhitespace: true,
-              collapseInlineTagWhitespace: true,
-              keepClosingSlash: true,
-              minifyCSS: true,
-              minifyJS: true,
-            },
-          }),
-        }),
+        htmlConfigPlugin(
+          path.join(sourcePath, 'index.html'),
+          configReactData.htmlEnv,
+          isEnvProduction
+        ),
 
       // HOT RELOAD
       isEnvDevelopment && new webpack.HotModuleReplacementPlugin(),
@@ -157,22 +126,8 @@ export default function(
                 },
               },
             },
-      minimize: true,
-      minimizer: [
-        new TerserPlugin({
-          parallel: true,
-          sourceMap: false,
-          terserOptions: {
-            compress: false,
-            keep_fnames: true,
-            keep_classnames: true,
-            mangle: {
-              keep_fnames: true,
-              keep_classnames: true,
-            },
-          },
-        }),
-      ],
+      minimize: isEnvProduction,
+      minimizer: [terserConfigPlugin()],
       usedExports: isEnvProduction,
       sideEffects: isEnvProduction,
     },
@@ -213,8 +168,9 @@ export default function(
     };
   }
 
+  // ==== SOURCEMAP ==========================================================================
   if (isEnvDevelopment) {
-    config.devtool = 'eval-source-map';
+    config.devtool = 'cheap-module-source-map';
   }
 
   return Object.assign({}, config, configReactData.webpack);
