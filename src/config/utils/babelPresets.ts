@@ -29,6 +29,11 @@ export const babelPresets = (env: EnvType) => {
         modules: false,
         // Exclude transforms that make all code slower
         exclude: ['transform-typeof-symbol'],
+        // To use async / await and avoid
+        // error: ReferenceError: regeneratorRuntime is not defined
+        targets: {
+          node: 'current',
+        },
       },
     ],
   ];
