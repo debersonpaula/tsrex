@@ -1,9 +1,15 @@
 {
-  "extends": "../tsconfig.json",
   "include": ["../utils/**/*"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
-    "outDir": "../dist-bin/utils",
+    "allowSyntheticDefaultImports": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "lib": ["es5", "es2015", "es6"],
+    "module": "commonjs",
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "outDir": "../dist-bin/utils",
+    "skipLibCheck": true,
+    "target": "es5"
   }
 }
